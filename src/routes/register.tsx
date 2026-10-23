@@ -9,6 +9,8 @@ import { speak } from "@/lib/browser";
 import { deptById, type DeptId } from "@/data/departments";
 import { pageHead } from "@/lib/head";
 import { cn } from "@/lib/utils";
+import { useWebMCP } from "use-webmcp-tool";
+import { runWebMCPTool } from "@/lib/webmcp-telemetry";
 import type { Key } from "@/i18n/en";
 
 export const Route = createFileRoute("/register")({
