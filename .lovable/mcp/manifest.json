@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "sdk_version": "3.2.2",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "reference-guided-builder",
+      "version": "0.1.0",
+      "title": "Reference-Guided Builder"
+    },
+    "tools": [
+      {
+        "name": "list_departments",
+        "title": "List OPD departments",
+        "description": "List the outpatient departments of the demo hospital, with the doctor on duty, room number, average minutes per patient, and OPD hours.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_places",
+        "title": "List hospital places",
+        "description": "List the demo hospital's places — entrances, counters, services, rooms, waiting halls and facilities — with floor and a plain-language landmark. Optionally filter by floor (0, 1 or 2).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "floor": {
+              "description": "Floor to filter by: 0 (ground), 1 (first) or 2 (second). Omit for all floors.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "find_route",
+        "title": "Find a route inside the hospital",
+        "description": "Find the shortest walking route between two places in the demo hospital. Use list_places to get place IDs. Set avoidStairs for a step-free route using the lift and ramp.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Starting place ID, e.g. \"entrance\"."
+            },
+            "to": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Destination place ID, e.g. \"room3\" or \"pharmacy\"."
+            },
+            "avoidStairs": {
+              "description": "When true, the route uses the lift and ramp instead of stairs.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
