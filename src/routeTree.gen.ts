@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as SlipTokenRouteImport } from './routes/slip.$token'
 import { Route as TurnTokenRouteImport } from './routes/turn.$token'
 
@@ -25,11 +27,22 @@ const HomeRoute = HomeRouteImport.update({
   path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const SlipTokenRoute = SlipTokenRouteImport.update({
   id: '/slip/$token',
   path: '/slip/$token',
@@ -44,14 +57,18 @@ const TurnTokenRoute = TurnTokenRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/mcp': typeof McpRoute
   '/register': typeof RegisterRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/mcp': typeof McpRoute
   '/register': typeof RegisterRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
 }
@@ -59,22 +76,48 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
+  '/mcp': typeof McpRoute
   '/register': typeof RegisterRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home' | '/register' | '/slip/$token' | '/turn/$token'
+  fullPaths:
+    | '/'
+    | '/home'
+    | '/mcp'
+    | '/register'
+    | '/.well-known/oauth-protected-resource'
+    | '/slip/$token'
+    | '/turn/$token'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home' | '/register' | '/slip/$token' | '/turn/$token'
-  id: '__root__' | '/' | '/home' | '/register' | '/slip/$token' | '/turn/$token'
+  to:
+    | '/'
+    | '/home'
+    | '/mcp'
+    | '/register'
+    | '/.well-known/oauth-protected-resource'
+    | '/slip/$token'
+    | '/turn/$token'
+  id:
+    | '__root__'
+    | '/'
+    | '/home'
+    | '/mcp'
+    | '/register'
+    | '/.well-known/oauth-protected-resource'
+    | '/slip/$token'
+    | '/turn/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeRoute: typeof HomeRoute
+  McpRoute: typeof McpRoute
   RegisterRoute: typeof RegisterRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   SlipTokenRoute: typeof SlipTokenRoute
   TurnTokenRoute: typeof TurnTokenRoute
 }
@@ -95,11 +138,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/slip/$token': {
@@ -122,7 +179,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeRoute: HomeRoute,
+  McpRoute: McpRoute,
   RegisterRoute: RegisterRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   SlipTokenRoute: SlipTokenRoute,
   TurnTokenRoute: TurnTokenRoute,
 }
