@@ -9,6 +9,8 @@ import { speak } from "@/lib/browser";
 import { deptById, type DeptId } from "@/data/departments";
 import { pageHead } from "@/lib/head";
 import { cn } from "@/lib/utils";
+import { useWebMCP } from "use-webmcp-tool";
+import { runWebMCPTool } from "@/lib/webmcp-telemetry";
 import type { Key } from "@/i18n/en";
 
 export const Route = createFileRoute("/register")({
@@ -61,6 +63,18 @@ function RegisterPage() {
   useEffect(() => { try { const raw = sessionStorage.getItem(DKEY); if (raw) { const x = JSON.parse(raw); setD({ ...EMPTY, ...x.d }); setStep(x.step ?? 0); } } catch { /* ignore */ } }, []);
   useEffect(() => { try { sessionStorage.setItem(DKEY, JSON.stringify({ d, step })); } catch { /* ignore */ } }, [d, step]);
   useEffect(() => { inputRef.current?.focus(); setErr(null); if (prefs.read && step < 5) speak(`${t(QUESTIONS[step][0])}. ${t(QUESTIONS[step][1])}`, lang); }, [step]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useWebMCP({
+    name: "get_registration_progress",
+    description: "Read which step of the 5-step OPD registration the visitor is on and which details are filled in. Does not return the details themselves.",
+    annotations: { readOnlyHint: true },
+    execute: () =>
+      runWebMCPTool("get_registration_progress", () => {
+        if (step >= 5) return "Review step: all 5 answers are ready to confirm.";
+        const filled = [d.name.trim() !== "", d.age !== "", d.gender !== "", d.mobile !== "", d.dept !== undefined];
+        return `Step ${step + 1} of 5. Filled so far: name ${filled[0] ? "yes" : "no"}, age ${filled[1] ? "yes" : "no"}, gender ${filled[2] ? "yes" : "no"}, mobile ${filled[3] ? "yes" : "no"}, department ${filled[4] ? "yes" : "no"}.`;
+      }),
+  });
 
   const set = (p: Partial<Draft>) => { setD((x) => ({ ...x, ...p })); setErr(null); };
   const next = () => { const e = validate(step, d); if (e) { setErr(e); return; } setStep((s) => s + 1); };
