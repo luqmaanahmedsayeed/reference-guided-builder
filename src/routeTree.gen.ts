@@ -10,9 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BoardRouteImport } from './routes/board'
+import { Route as CounterRouteImport } from './routes/counter'
+import { Route as EmergencyRouteImport } from './routes/emergency'
+import { Route as FindPlaceRouteImport } from './routes/find-place'
+import { Route as HaveSlipRouteImport } from './routes/have-slip'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as StaffRouteImport } from './routes/staff'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as SlipTokenRouteImport } from './routes/slip.$token'
 import { Route as TurnTokenRouteImport } from './routes/turn.$token'
@@ -20,6 +27,31 @@ import { Route as TurnTokenRouteImport } from './routes/turn.$token'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BoardRoute = BoardRouteImport.update({
+  id: '/board',
+  path: '/board',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CounterRoute = CounterRouteImport.update({
+  id: '/counter',
+  path: '/counter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmergencyRoute = EmergencyRouteImport.update({
+  id: '/emergency',
+  path: '/emergency',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindPlaceRoute = FindPlaceRouteImport.update({
+  id: '/find-place',
+  path: '/find-place',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HaveSlipRoute = HaveSlipRouteImport.update({
+  id: '/have-slip',
+  path: '/have-slip',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HomeRoute = HomeRouteImport.update({
@@ -35,6 +67,16 @@ const McpRoute = McpRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffRoute = StaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
@@ -56,18 +98,32 @@ const TurnTokenRoute = TurnTokenRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/board': typeof BoardRoute
+  '/counter': typeof CounterRoute
+  '/emergency': typeof EmergencyRoute
+  '/find-place': typeof FindPlaceRoute
+  '/have-slip': typeof HaveSlipRoute
   '/home': typeof HomeRoute
   '/mcp': typeof McpRoute
   '/register': typeof RegisterRoute
+  '/settings': typeof SettingsRoute
+  '/staff': typeof StaffRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/board': typeof BoardRoute
+  '/counter': typeof CounterRoute
+  '/emergency': typeof EmergencyRoute
+  '/find-place': typeof FindPlaceRoute
+  '/have-slip': typeof HaveSlipRoute
   '/home': typeof HomeRoute
   '/mcp': typeof McpRoute
   '/register': typeof RegisterRoute
+  '/settings': typeof SettingsRoute
+  '/staff': typeof StaffRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
@@ -75,9 +131,16 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/board': typeof BoardRoute
+  '/counter': typeof CounterRoute
+  '/emergency': typeof EmergencyRoute
+  '/find-place': typeof FindPlaceRoute
+  '/have-slip': typeof HaveSlipRoute
   '/home': typeof HomeRoute
   '/mcp': typeof McpRoute
   '/register': typeof RegisterRoute
+  '/settings': typeof SettingsRoute
+  '/staff': typeof StaffRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
@@ -86,27 +149,48 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/board'
+    | '/counter'
+    | '/emergency'
+    | '/find-place'
+    | '/have-slip'
     | '/home'
     | '/mcp'
     | '/register'
+    | '/settings'
+    | '/staff'
     | '/.well-known/oauth-protected-resource'
     | '/slip/$token'
     | '/turn/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/board'
+    | '/counter'
+    | '/emergency'
+    | '/find-place'
+    | '/have-slip'
     | '/home'
     | '/mcp'
     | '/register'
+    | '/settings'
+    | '/staff'
     | '/.well-known/oauth-protected-resource'
     | '/slip/$token'
     | '/turn/$token'
   id:
     | '__root__'
     | '/'
+    | '/board'
+    | '/counter'
+    | '/emergency'
+    | '/find-place'
+    | '/have-slip'
     | '/home'
     | '/mcp'
     | '/register'
+    | '/settings'
+    | '/staff'
     | '/.well-known/oauth-protected-resource'
     | '/slip/$token'
     | '/turn/$token'
@@ -114,9 +198,16 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BoardRoute: typeof BoardRoute
+  CounterRoute: typeof CounterRoute
+  EmergencyRoute: typeof EmergencyRoute
+  FindPlaceRoute: typeof FindPlaceRoute
+  HaveSlipRoute: typeof HaveSlipRoute
   HomeRoute: typeof HomeRoute
   McpRoute: typeof McpRoute
   RegisterRoute: typeof RegisterRoute
+  SettingsRoute: typeof SettingsRoute
+  StaffRoute: typeof StaffRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   SlipTokenRoute: typeof SlipTokenRoute
   TurnTokenRoute: typeof TurnTokenRoute
@@ -129,6 +220,41 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/board': {
+      id: '/board'
+      path: '/board'
+      fullPath: '/board'
+      preLoaderRoute: typeof BoardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/counter': {
+      id: '/counter'
+      path: '/counter'
+      fullPath: '/counter'
+      preLoaderRoute: typeof CounterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emergency': {
+      id: '/emergency'
+      path: '/emergency'
+      fullPath: '/emergency'
+      preLoaderRoute: typeof EmergencyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/find-place': {
+      id: '/find-place'
+      path: '/find-place'
+      fullPath: '/find-place'
+      preLoaderRoute: typeof FindPlaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/have-slip': {
+      id: '/have-slip'
+      path: '/have-slip'
+      fullPath: '/have-slip'
+      preLoaderRoute: typeof HaveSlipRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/home': {
@@ -150,6 +276,20 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staff': {
+      id: '/staff'
+      path: '/staff'
+      fullPath: '/staff'
+      preLoaderRoute: typeof StaffRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.well-known/oauth-protected-resource': {
@@ -178,9 +318,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BoardRoute: BoardRoute,
+  CounterRoute: CounterRoute,
+  EmergencyRoute: EmergencyRoute,
+  FindPlaceRoute: FindPlaceRoute,
+  HaveSlipRoute: HaveSlipRoute,
   HomeRoute: HomeRoute,
   McpRoute: McpRoute,
   RegisterRoute: RegisterRoute,
+  SettingsRoute: SettingsRoute,
+  StaffRoute: StaffRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   SlipTokenRoute: SlipTokenRoute,
