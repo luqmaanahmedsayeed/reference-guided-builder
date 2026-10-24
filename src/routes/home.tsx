@@ -8,6 +8,7 @@ import { pageHead } from "@/lib/head";
 import { cn } from "@/lib/utils";
 import { useWebMCP } from "use-webmcp-tool";
 import { runWebMCPTool } from "@/lib/webmcp-telemetry";
+import { Assistant } from "@/components/Assistant";
 
 export const Route = createFileRoute("/home")({
   head: pageHead("Home", "Register, check your turn, find a place or get emergency help at City District Hospital."),
@@ -64,6 +65,7 @@ function HomePage() {
           </Link>
         ))}
       </div>
+      <Assistant />
       <div className="mt-8 border-y border-border">
         <Switch checked={prefs.assisted} label={t("assist.label")} desc={t("assist.desc")}
           onChange={setAssistedMode} />

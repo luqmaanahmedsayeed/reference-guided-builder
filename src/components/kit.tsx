@@ -44,7 +44,7 @@ export function DeptGrid({ value, onChange, onNotSure, compact }: { value?: Dept
             className={cn("tile flex min-h-16 items-start gap-3 p-4 text-left transition-colors", on ? "border-2 border-primary bg-secondary" : "hover:bg-secondary")}>
             <I className={cn("mt-0.5 size-7 shrink-0", on ? "text-primary" : "")} aria-hidden />
             <span className="min-w-0">
-              <span className="flex items-center gap-2 font-display font-bold">{l(d.name)}<span role="button" tabIndex={0} aria-label={`${t("read.btn")}: ${l(d.name)}`} onClick={(e) => { e.stopPropagation(); speak(l(d.name), lang); }} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); speak(l(d.name), lang); } }}><Volume2 className="size-4" aria-hidden /></span></span>
+              <span className="flex items-center gap-2 font-display font-bold">{l(d.name)}<button type="button" className="rounded p-1 text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" aria-label={`${t("read.btn")}: ${l(d.name)}`} onClick={(e) => { e.stopPropagation(); speak(l(d.name), lang); }}><Volume2 className="size-4" aria-hidden /></button></span>
               {!compact && <span className="block text-sm text-muted-foreground">{l(d.desc)}</span>}
             </span>
           </button>
@@ -87,7 +87,9 @@ export function ReadBtn({ text, label }: { text: string; label?: string }) {
     if (reading) { window.speechSynthesis?.cancel(); setReading(false); return; }
     if (!speak(text, lang)) { toast(t("read.none")); return; }
     setReading(true);
-    window.speechSynthesis?.addEventListener("end", () => setReading(false), { once: true });
+    const done = () => setReading(false);
+    window.speechSynthesis?.addEventListener("end", done, { once: true });
+    window.speechSynthesis?.addEventListener("error", done, { once: true });
   };
   return <Btn type="button" v="quiet" size="sm" onClick={toggle} aria-label={reading ? t("read.stop") : (label ?? t("read.btn"))}>
     {reading ? <Square className="size-5" aria-hidden /> : <Volume2 className="size-5" aria-hidden />} {reading ? t("read.stop") : (label ?? t("read.btn"))}

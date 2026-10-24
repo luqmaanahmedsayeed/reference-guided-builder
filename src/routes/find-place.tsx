@@ -33,7 +33,10 @@ function FindPlacePage() {
     [from, destination, prefs.avoidStairs],
   );
   const steps = result ? routeSteps(result.path) : [];
-  const places = PLACES.filter((p) => p.name[lang].toLowerCase().includes(query.toLowerCase()));
+  const places = PLACES.filter((p) => {
+    const q = query.trim().toLowerCase();
+    return !q || p.name[lang].toLowerCase().includes(q) || p.name.en.toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
+  });
   const describe = (step: (typeof steps)[number]) => {
     const place = step.place ? placeById(step.place) : undefined;
     if (step.kind === "start")
@@ -73,8 +76,14 @@ function FindPlacePage() {
                 onChange={(e) => setQuery(e.target.value)}
                 className="min-h-12 w-full bg-transparent outline-none"
                 placeholder={t("place.search")}
+                role="combobox"
+                aria-expanded={query.length > 0}
+                aria-controls="place-suggestions"
               />
             </div>
+            {query && <div id="place-suggestions" role="listbox" className="mt-2 border-2 border-foreground bg-background">
+              {places.length ? places.slice(0, 6).map((p) => <button type="button" role="option" key={p.id} className="block w-full px-3 py-3 text-left hover:bg-secondary" onClick={() => { setDestination(p.id); setQuery(l(p.name)); }}>{l(p.name)} <span className="font-mono text-sm text-muted-foreground">{p.id}</span></button>) : <p className="px-3 py-3 text-muted-foreground">{t("place.noResults")}</p>}
+            </div>}
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-2 font-display font-bold">

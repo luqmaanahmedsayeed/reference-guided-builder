@@ -21,6 +21,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as StaffRouteImport } from './routes/staff'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as ApiAssistantRouteImport } from './routes/api.assistant'
 import { Route as SlipTokenRouteImport } from './routes/slip.$token'
 import { Route as TurnTokenRouteImport } from './routes/turn.$token'
 
@@ -85,6 +86,11 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiAssistantRoute = ApiAssistantRouteImport.update({
+  id: '/api/assistant',
+  path: '/api/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SlipTokenRoute = SlipTokenRouteImport.update({
   id: '/slip/$token',
   path: '/slip/$token',
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/staff': typeof StaffRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/api/assistant': typeof ApiAssistantRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
 }
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/staff': typeof StaffRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/api/assistant': typeof ApiAssistantRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
 }
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/staff': typeof StaffRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/api/assistant': typeof ApiAssistantRoute
   '/slip/$token': typeof SlipTokenRoute
   '/turn/$token': typeof TurnTokenRoute
 }
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/staff'
     | '/.well-known/oauth-protected-resource'
+    | '/api/assistant'
     | '/slip/$token'
     | '/turn/$token'
   fileRoutesByTo: FileRoutesByTo
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/staff'
     | '/.well-known/oauth-protected-resource'
+    | '/api/assistant'
     | '/slip/$token'
     | '/turn/$token'
   id:
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/staff'
     | '/.well-known/oauth-protected-resource'
+    | '/api/assistant'
     | '/slip/$token'
     | '/turn/$token'
   fileRoutesById: FileRoutesById
@@ -209,6 +221,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   StaffRoute: typeof StaffRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  ApiAssistantRoute: typeof ApiAssistantRoute
   SlipTokenRoute: typeof SlipTokenRoute
   TurnTokenRoute: typeof TurnTokenRoute
 }
@@ -299,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/assistant': {
+      id: '/api/assistant'
+      path: '/api/assistant'
+      fullPath: '/api/assistant'
+      preLoaderRoute: typeof ApiAssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/slip/$token': {
       id: '/slip/$token'
       path: '/slip/$token'
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   StaffRoute: StaffRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  ApiAssistantRoute: ApiAssistantRoute,
   SlipTokenRoute: SlipTokenRoute,
   TurnTokenRoute: TurnTokenRoute,
 }

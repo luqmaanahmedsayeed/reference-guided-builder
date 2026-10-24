@@ -1,10 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, QrCode, Search } from "lucide-react";
+import { useT } from "@/lib/i18n";
 import { AppShell } from "@/components/AppShell";
 import { Btn, PageTitle } from "@/components/kit";
 import { findEntry, normalizeToken, useQueue } from "@/lib/store";
-import { useT } from "@/lib/i18n";
 import { pageHead } from "@/lib/head";
 export const Route = createFileRoute("/have-slip")({
   head: pageHead("I have my slip", "Enter your token to see your turn."),
@@ -32,7 +32,13 @@ function HaveSlipPage() {
         if (!videoRef.current || !streamRef.current) return;
         const result = await detector.detect(videoRef.current);
         const value = result[0]?.rawValue;
-        if (value) { setRaw(normalizeToken(value)); stopScan(); return; }
+        if (value) {
+          const token = normalizeToken(value) ?? normalizeToken(decodeURIComponent(value).split("/").filter(Boolean).pop() ?? "");
+          if (token) { setRaw(token); setError(""); stopScan(); return; }
+          setError(t("have.unreadable"));
+          stopScan();
+          return;
+        }
         requestAnimationFrame(scan);
       };
       videoRef.current?.addEventListener("playing", scan, { once: true });
@@ -96,8 +102,8 @@ function HaveSlipPage() {
             <QrCode className="size-7 text-primary" aria-hidden />
             <div>
               <h2 className="text-xl">{t("have.scan")}</h2>
-              <p className="mt-2 text-muted-foreground">{scanning ? "Point your camera at the QR code." : "Scan your slip QR code, or enter the token manually."}</p>
-              {scanning ? <div className="mt-4 flex flex-col gap-3"><video ref={videoRef} autoPlay muted playsInline className="aspect-video w-full border-2 border-foreground object-cover" /><Btn type="button" v="quiet" onClick={stopScan}>Stop scanner</Btn></div> : <Btn type="button" v="quiet" className="mt-4" onClick={startScan}><QrCode aria-hidden />Scan QR code</Btn>}
+              <p className="mt-2 text-muted-foreground">{scanning ? t("have.scanning") : t("have.scanHint")}</p>
+              {scanning ? <div className="mt-4 flex flex-col gap-3"><video ref={videoRef} autoPlay muted playsInline className="aspect-video w-full border-2 border-foreground object-cover" aria-label={t("have.scanning")} /><Btn type="button" v="quiet" onClick={stopScan}><QrCode aria-hidden />{t("have.stop")}</Btn></div> : <Btn type="button" v="quiet" className="mt-4" onClick={startScan}><QrCode aria-hidden />{t("have.scan")}</Btn>}
               <p className="mt-3 text-sm">{t("have.or")}: {t("have.label")}</p>
             </div>
           </div>
