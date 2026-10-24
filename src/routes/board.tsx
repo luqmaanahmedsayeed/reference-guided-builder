@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Siren } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { StaffGate } from "@/components/StaffGate";
 import { PageTitle } from "@/components/kit";
 import { DEPARTMENTS } from "@/data/departments";
 import { deptQueue, useQueue } from "@/lib/store";
@@ -15,7 +16,8 @@ function BoardPage() {
   const s = useQueue();
   const urgent = s.flags.some((f) => !f.ack);
   return (
-    <AppShell staff wide>
+    <StaffGate>
+      <AppShell staff wide>
       <PageTitle
         aside={
           <Link to="/staff" className="inline-flex items-center gap-2 font-display font-bold">
@@ -50,6 +52,7 @@ function BoardPage() {
           );
         })}
       </div>
-    </AppShell>
+      </AppShell>
+    </StaffGate>
   );
 }

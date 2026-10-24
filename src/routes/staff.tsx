@@ -18,6 +18,7 @@ import {
 } from "@/lib/store";
 import { useT, fmtTime } from "@/lib/i18n";
 import { pageHead } from "@/lib/head";
+import { StaffGate } from "@/components/StaffGate";
 export const Route = createFileRoute("/staff")({
   head: pageHead("Staff dashboard", "Demo staff view of the OPD queue."),
   component: StaffPage,
@@ -32,7 +33,8 @@ function StaffPage() {
   const unacked = s.flags.filter((f) => !f.ack);
   const d = DEPARTMENTS.find((x) => x.id === dept)!;
   return (
-    <AppShell staff wide>
+    <StaffGate>
+      <AppShell staff wide>
       <PageTitle
         eyebrow={t("staff.title")}
         aside={
@@ -156,6 +158,7 @@ function StaffPage() {
           </div>
         </div>
       </div>
-    </AppShell>
+      </AppShell>
+    </StaffGate>
   );
 }

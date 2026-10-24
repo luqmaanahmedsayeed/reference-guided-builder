@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, Printer, UserPlus } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
+import { StaffGate } from "@/components/StaffGate";
 import { Btn, DeptGrid, PageTitle } from "@/components/kit";
 import { createToken } from "@/lib/store";
 import type { DeptId } from "@/data/departments";
@@ -37,7 +38,8 @@ function CounterPage() {
     setDept(undefined);
   };
   return (
-    <AppShell staff>
+    <StaffGate>
+      <AppShell staff>
       <PageTitle
         aside={
           <Link to="/staff" className="inline-flex items-center gap-2 font-display font-bold">
@@ -128,6 +130,7 @@ function CounterPage() {
           <Btn type="submit">{t("counter.create")}</Btn>
         </form>
       )}
-    </AppShell>
+      </AppShell>
+    </StaffGate>
   );
 }
