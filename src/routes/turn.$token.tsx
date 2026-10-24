@@ -38,7 +38,7 @@ function TurnPage() {
     markAlerted(token);
     beep(880, 300); setTimeout(() => beep(660, 300), 350);
     navigator.vibrate?.([300, 150, 300]);
-    if ("Notification" in window && Notification.permission === "granted") new Notification("Sahai Setu", { body: t("turn.alert3", { room: dept.room }) });
+    if ("Notification" in window && Notification.permission === "granted") new Notification("OPD Saathi", { body: t("turn.alert3", { room: dept.room }) });
   }, [ahead, alerted, e?.status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!e || !dept || !room) return <AppShell><NotFoundToken /></AppShell>;

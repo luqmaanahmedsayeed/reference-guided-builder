@@ -51,7 +51,7 @@ function SlipPage() {
       const c = document.createElement("canvas"); c.width = 600; c.height = 900;
       const g = c.getContext("2d")!; g.fillStyle = "#fff"; g.fillRect(0, 0, 600, 900);
       g.fillStyle = "#C62020"; g.fillRect(0, 0, 600, 16);
-      g.fillStyle = "#141414"; g.font = "bold 30px Helvetica, Arial"; g.fillText("Sahai Setu · City District Hospital", 40, 70);
+      g.fillStyle = "#141414"; g.font = "bold 30px Helvetica, Arial"; g.fillText("OPD Saathi · City District Hospital", 40, 70);
       g.font = "16px monospace"; g.fillText(t("slip.token").toUpperCase(), 40, 120);
       g.font = "bold 96px monospace"; g.fillText(token, 40, 210);
       g.font = "22px Helvetica, Arial";

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { pageHead } from "@/lib/head";
 
 export const Route = createFileRoute("/")({
-  head: pageHead("Choose your language", "Sahai Setu — register in English, Hindi or Tamil, know your turn and find your room."),
+  head: pageHead("Choose your language", "OPD Saathi — register in English, Hindi or Tamil, know your turn and find your room."),
   component: LanguagePicker,
 });
 
