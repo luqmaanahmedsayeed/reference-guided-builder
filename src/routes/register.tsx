@@ -22,8 +22,10 @@ export type Draft = { name: string; age: string; gender: string; mobile: string;
 const EMPTY: Draft = { name: "", age: "", gender: "", mobile: "" };
 const DKEY = "opd.draft";
 
+const NAME_PATTERN = /^(?=.*\p{L})[\p{L}\p{M} .'-]+$/u;
+
 export function validate(step: number, d: Draft): Key | null {
-  if (step === 0 && !d.name.trim()) return "reg.nameE";
+  if (step === 0 && (!d.name.trim() || !NAME_PATTERN.test(d.name.trim()))) return "reg.nameE";
   if (step === 1) { const a = Number(d.age); if (d.age === "" || !Number.isInteger(a) || a < 0 || a > 120) return "reg.ageE"; }
   if (step === 2 && !d.gender) return "reg.genderE";
   if (step === 3 && d.mobile && !/^\d{10}$/.test(d.mobile)) return "reg.mobileE";
