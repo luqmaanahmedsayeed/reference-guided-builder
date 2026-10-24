@@ -1,7 +1,7 @@
 import type { Key } from "./en";
 
 export const hi: Record<Key, string> = {
-  "app.name": "OPD साथी",
+  "app.name": "Sahai Setu",
   "app.hospital": "सिटी जिला अस्पताल",
   "app.demo": "डेमो · नमूना अस्पताल · किसी असली अस्पताल से जुड़ा नहीं",
   "app.tagline": "अपनी भाषा में पंजीकरण करें। अपनी बारी जानें। अपना कमरा खोजें। ज़रूरत पर मदद पाएं।",
@@ -101,7 +101,7 @@ export const hi: Record<Key, string> = {
   "slip.save": "फोटो के रूप में सेव करें",
   "slip.print": "प्रिंट करें",
   "slip.enlarge": "टोकन बड़ा करें",
-  "slip.saved": "पर्ची की फोटो आपके डिवाइस में सेव हो गई।",
+  "slip.saved": "पर्��ी की फोटो आपके डिवाइस में सेव हो गई।",
   "slip.saveFail": "फोटो सेव नहीं हो सकी। प्रिंट दबाएं और “PDF के रूप में सेव करें” चुनें।",
   "slip.notFound": "यह टोकन नहीं मिला।",
   "slip.notFoundD": "नंबर जांचें, या फिर से पंजीकरण करें।",

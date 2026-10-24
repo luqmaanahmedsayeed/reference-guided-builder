@@ -24,7 +24,7 @@ function LanguagePicker() {
       <div aria-hidden className="pointer-events-none absolute -bottom-40 -right-32 size-[26rem] rounded-full bg-primary" />
       <div className="relative mx-auto grid max-w-5xl gap-10 px-5 py-10 md:grid-cols-[1.1fr_1fr] md:py-20">
         <div>
-          <p className="font-display text-4xl font-bold leading-none">OPD<br /><span className="text-primary">Saathi</span></p>
+          <p className="font-display text-4xl font-bold leading-none"><span className="text-ink">Sahai</span><br /><span className="text-primary">Setu</span></p>
           <p className="eyebrow mt-3">City District Hospital · सिटी जिला अस्पताल · நகர மாவட்ட மருத்துவமனை</p>
           <h1 className="mt-10 text-5xl leading-[0.95] sm:text-6xl">{translate(L, "lang.title")}</h1>
           <p className="mt-4 max-w-md text-lg text-muted-foreground">{translate(L, "lang.sub")}</p>

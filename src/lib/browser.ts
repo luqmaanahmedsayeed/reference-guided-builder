@@ -5,8 +5,7 @@ const LOCALE: Record<Lang, string> = { en: "en-IN", hi: "hi-IN", ta: "ta-IN" };
 export function hasVoice(lang: Lang) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
   const voices = window.speechSynthesis.getVoices();
-  if (lang === "en") return true;
-  return voices.some((v) => v.lang.toLowerCase().startsWith(lang));
+  return voices.length === 0 || voices.some((v) => v.lang.toLowerCase().startsWith(LOCALE[lang].slice(0, 2)));
 }
 
 /** Speaks text; returns false when no suitable voice exists. */

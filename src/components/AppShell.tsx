@@ -34,7 +34,7 @@ export function AppShell({ children, staff, wide }: { children: ReactNode; staff
       <header className="no-print sticky top-0 z-30 border-b-2 border-foreground bg-background">
         <div className={cn("mx-auto flex items-center gap-3 px-4 py-2", wide ? "max-w-7xl" : "max-w-5xl")}>
           <Link to="/home" className="min-w-0 font-display leading-none">
-            <span className="block text-xl font-bold">OPD <span className="text-primary">Saathi</span></span>
+            <span className="block text-xl font-bold"><span className="text-ink">Sahai</span> <span className="text-primary">Setu</span></span>
             <span className="eyebrow hidden sm:block">{t("app.hospital")}</span>
           </Link>
           <nav aria-label="Main" className="ml-4 hidden gap-1 md:flex">

@@ -38,7 +38,7 @@ function SlipPage() {
   const s = useQueue();
   const [big, setBig] = useState(false);
   const e = findEntry(s, token);
-  const qrText = typeof window !== "undefined" ? `${window.location.origin}/turn/${token}` : `/turn/${token}`;
+  const qrText = typeof window !== "undefined" ? `${window.location.origin}/slip/${encodeURIComponent(token)}` : `/turn/${token}`;
   const qrUrl = useQrDataUrl(qrText);
   if (!e) return <AppShell><NotFoundToken /></AppShell>;
   const dept = deptById(e.dept)!; const room = placeById(dept.placeId)!;
@@ -68,7 +68,7 @@ function SlipPage() {
         <div className="h-3 bg-primary" />
         <div className="p-5 sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-2">
-            <div><p className="font-display text-lg font-bold">OPD <span className="text-primary">Saathi</span></p><p className="eyebrow">{t("app.hospital")}</p></div>
+            <div><p className="font-display text-lg font-bold"><span className="text-ink">Sahai</span> <span className="text-primary">Setu</span></p><p className="eyebrow">{t("app.hospital")}</p></div>
             <p className="eyebrow">{t("slip.issued")} {fmtTime(e.createdAt)}</p>
           </div>
           <p className="eyebrow mt-6">{t("slip.token")}</p>
