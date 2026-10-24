@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { useState, type ButtonHTMLAttributes, type ReactNode } from "react";
-import { Mic, Volume2 } from "lucide-react";
+import { Mic, Volume2, Square } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useT } from "@/lib/i18n";
 import { speak, speechRecognitionCtor, LOCALE } from "@/lib/browser";
@@ -34,7 +34,7 @@ export const DEPT_ICON: Record<DeptId | "HELP", typeof Stethoscope> = {
 };
 
 export function DeptGrid({ value, onChange, onNotSure, compact }: { value?: DeptId; onChange: (d: DeptId) => void; onNotSure?: () => void; compact?: boolean }) {
-  const { t, l } = useT();
+  const { t, l, lang } = useT();
   return (
     <div className={cn("grid gap-3", compact ? "grid-cols-2 lg:grid-cols-4" : "grid-cols-1 sm:grid-cols-2")} role="radiogroup" aria-label={t("reg.dept")}>
       {DEPARTMENTS.map((d) => {
@@ -44,7 +44,7 @@ export function DeptGrid({ value, onChange, onNotSure, compact }: { value?: Dept
             className={cn("tile flex min-h-16 items-start gap-3 p-4 text-left transition-colors", on ? "border-2 border-primary bg-secondary" : "hover:bg-secondary")}>
             <I className={cn("mt-0.5 size-7 shrink-0", on ? "text-primary" : "")} aria-hidden />
             <span className="min-w-0">
-              <span className="block font-display font-bold">{l(d.name)}</span>
+              <span className="flex items-center gap-2 font-display font-bold">{l(d.name)}<span role="button" tabIndex={0} aria-label={`${t("read.btn")}: ${l(d.name)}`} onClick={(e) => { e.stopPropagation(); speak(l(d.name), lang); }} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); speak(l(d.name), lang); } }}><Volume2 className="size-4" aria-hidden /></span></span>
               {!compact && <span className="block text-sm text-muted-foreground">{l(d.desc)}</span>}
             </span>
           </button>
@@ -82,11 +82,16 @@ export function MicButton({ onText }: { onText: (s: string) => void }) {
 
 export function ReadBtn({ text, label }: { text: string; label?: string }) {
   const { t, lang } = useT();
-  return (
-    <Btn type="button" v="quiet" size="sm" onClick={() => { if (!speak(text, lang)) toast(t("read.none")); }}>
-      <Volume2 className="size-5" aria-hidden /> {label ?? t("read.btn")}
-    </Btn>
-  );
+  const [reading, setReading] = useState(false);
+  const toggle = () => {
+    if (reading) { window.speechSynthesis?.cancel(); setReading(false); return; }
+    if (!speak(text, lang)) { toast(t("read.none")); return; }
+    setReading(true);
+    window.speechSynthesis?.addEventListener("end", () => setReading(false), { once: true });
+  };
+  return <Btn type="button" v="quiet" size="sm" onClick={toggle} aria-label={reading ? t("read.stop") : (label ?? t("read.btn"))}>
+    {reading ? <Square className="size-5" aria-hidden /> : <Volume2 className="size-5" aria-hidden />} {reading ? t("read.stop") : (label ?? t("read.btn"))}
+  </Btn>;
 }
 
 export function Switch({ checked, onChange, label, desc }: { checked: boolean; onChange: (v: boolean) => void; label: string; desc?: string }) {

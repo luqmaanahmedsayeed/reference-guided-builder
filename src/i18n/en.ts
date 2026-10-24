@@ -1,5 +1,5 @@
 export const en = {
-  "app.name": "OPD Saathi",
+  "app.name": "Sahai Setu",
   "app.hospital": "City District Hospital",
   "app.demo": "DEMO · Sample hospital · Not connected to a real hospital",
   "app.tagline": "Register in your language. Know your turn. Find your room. Get help when you need it.",
@@ -83,6 +83,9 @@ export const en = {
   "mic.unsupported": "Voice input is not available in this browser. Please type instead.",
   "mic.denied": "Microphone permission was denied. Please type instead.",
   "read.btn": "Read aloud",
+  "read.stop": "Stop reading",
+  "share.whatsapp": "Share slip on WhatsApp",
+  "share.whatsappD": "WhatsApp will open so you can choose whether to send this message.",
   "read.none": "Audio is not available for this language in this browser. Please read the text.",
   "slip.title": "OPD slip",
   "slip.token": "Token",
