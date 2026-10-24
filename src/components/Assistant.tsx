@@ -17,8 +17,11 @@ export function Assistant() {
     setBusy(true);
     try {
       const response = await fetch("/api/assistant", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ message: text, language: lang }) });
-      const data = await response.json() as { answer?: string; error?: string };
-      if (!response.ok || !data.answer) { toast(data.error ?? t("assistant.unavailable")); return; }
+      const data = await response.json() as { answer?: string; error?: string; requestId?: string };
+      if (!response.ok || !data.answer) {
+        toast(data.error ?? t("assistant.unavailable"));
+        return;
+      }
       setAnswer(data.answer);
       setMessage("");
     } catch { toast(t("assistant.unavailable")); }
