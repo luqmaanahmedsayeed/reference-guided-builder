@@ -5,6 +5,7 @@ import { AppShell } from "@/components/AppShell";
 import { Btn, DeptGrid, MicButton, ReadBtn } from "@/components/kit";
 import { useT } from "@/lib/i18n";
 import { createToken, usePrefs } from "@/lib/store";
+import { createRegistration } from "@/lib/registration";
 import { speak } from "@/lib/browser";
 import { deptById, type DeptId } from "@/data/departments";
 import { pageHead } from "@/lib/head";
@@ -80,11 +81,22 @@ function RegisterPage() {
 
   const set = (p: Partial<Draft>) => { setD((x) => ({ ...x, ...p })); setErr(null); };
   const next = () => { const e = validate(step, d); if (e) { setErr(e); return; } setStep((s) => s + 1); };
-  const submit = () => {
-    if (lock.current) return; lock.current = true; setBusy(true);
-    const token = createToken({ name: d.name.trim(), age: Number(d.age), gender: d.gender, mobile: d.mobile || undefined, dept: d.dept! });
-    sessionStorage.removeItem(DKEY);
-    navigate({ to: "/slip/$token", params: { token } });
+  const submit = async () => {
+    if (lock.current) return;
+    lock.current = true;
+    setBusy(true);
+    try {
+      const result = await createRegistration({ name: d.name.trim(), age: Number(d.age), gender: d.gender, mobile: d.mobile || undefined, dept: d.dept! });
+      const token = `${d.dept}-${String(result.ticket_number).padStart(3, "0")}`;
+      createToken({ name: d.name.trim(), age: Number(d.age), gender: d.gender, mobile: d.mobile || undefined, dept: d.dept! });
+      sessionStorage.removeItem(DKEY);
+      navigate({ to: "/slip/$token", params: { token } });
+    } catch (error) {
+      console.error("[v0] registration failed", error);
+      lock.current = false;
+      setBusy(false);
+      setErr("reg.submitE" as Key);
+    }
   };
 
   const field = (key: "name" | "age" | "mobile", type: string, ph: string) => (

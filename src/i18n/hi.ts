@@ -256,4 +256,11 @@ export const hi: Record<Key, string> = {
   "board.delay": "देरी",
   "err.title": "कुछ गलत हो गया",
   "err.home": "होम पर जाएं",
+  "assistant.title": "सहाय सेतु से पूछें",
+  "assistant.desc": "पंजीकरण, विभाग, टोकन या जगह खोजने के बारे में पूछें।",
+  "assistant.placeholder": "अस्पताल के बारे में प्रश्न लिखें…",
+  "assistant.ask": "सहायक से पूछें",
+  "assistant.unavailable": "सहायक अभी उपलब्ध नहीं है। कृपया निर्देशित विकल्पों का उपयोग करें।",
+  "share.whatsapp": "WhatsApp पर साझा करें",
+  "share.whatsappD": "पर्ची का लिंक साझा करें।",
 };
