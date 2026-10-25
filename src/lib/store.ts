@@ -127,11 +127,13 @@ export function normalizeToken(raw: string) {
   return m ? `${m[1]}-${m[2].padStart(3, "0")}` : null;
 }
 
-export function createToken(d: { name: string; dept: DeptId; age?: number; gender?: string; mobile?: string }) {
+export function createToken(d: { name: string; dept: DeptId; age?: number; gender?: string; mobile?: string }, tokenOverride?: string) {
   let token = "";
   mutate((s) => {
-    const n = ++s.counters[d.dept];
-    token = `${d.dept}-${pad(n)}`;
+    token = tokenOverride ?? `${d.dept}-${pad(++s.counters[d.dept])}`;
+    if (s.entries.some((entry) => entry.token === token)) return;
+    const number = Number(token.split("-")[1]);
+    if (Number.isFinite(number)) s.counters[d.dept] = Math.max(s.counters[d.dept], number);
     const seq = Math.max(0, ...s.entries.map((e) => e.seq)) + 1;
     s.entries.push({ ...d, token, status: "waiting", seq, createdAt: Date.now() });
   });
