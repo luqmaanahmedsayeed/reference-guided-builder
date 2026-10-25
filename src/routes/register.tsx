@@ -22,7 +22,6 @@ export const Route = createFileRoute("/register")({
 export type Draft = { name: string; age: string; gender: string; mobile: string; dept?: DeptId };
 const EMPTY: Draft = { name: "", age: "", gender: "", mobile: "" };
 const DKEY = "opd.draft";
-const RKEY = "opd.registration.idempotency";
 
 const NAME_PATTERN = /^(?=.*\p{L})[\p{L}\p{M} .'-]+$/u;
 
@@ -84,19 +83,13 @@ function RegisterPage() {
   const next = () => { const e = validate(step, d); if (e) { setErr(e); return; } setStep((s) => s + 1); };
   const submit = async () => {
     if (lock.current) return;
-    const validationError = [0, 1, 2, 3, 4].map((s) => validate(s, d)).find(Boolean);
-    if (validationError) { setErr(validationError); return; }
     lock.current = true;
     setBusy(true);
     try {
-      const existingKey = sessionStorage.getItem(RKEY);
-      const idempotencyKey = existingKey ?? crypto.randomUUID();
-      if (!existingKey) sessionStorage.setItem(RKEY, idempotencyKey);
-      const result = await createRegistration({ name: d.name.trim(), age: Number(d.age), gender: d.gender, mobile: d.mobile || undefined, dept: d.dept! }, idempotencyKey);
+      const result = await createRegistration({ name: d.name.trim(), age: Number(d.age), gender: d.gender, mobile: d.mobile || undefined, dept: d.dept! });
       const token = `${d.dept}-${String(result.ticket_number).padStart(3, "0")}`;
-      createToken({ name: d.name.trim(), age: Number(d.age), gender: d.gender, mobile: d.mobile || undefined, dept: d.dept! }, token);
+      createToken({ name: d.name.trim(), age: Number(d.age), gender: d.gender, mobile: d.mobile || undefined, dept: d.dept! });
       sessionStorage.removeItem(DKEY);
-      sessionStorage.removeItem(RKEY);
       navigate({ to: "/slip/$token", params: { token } });
     } catch (error) {
       console.error("[v0] registration failed", error);

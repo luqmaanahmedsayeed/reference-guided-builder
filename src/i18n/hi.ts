@@ -62,7 +62,6 @@ export const hi: Record<Key, string> = {
   "reg.reviewH": "टोकन लेने से पहले आप कुछ भी बदल सकते हैं।",
   "reg.confirm": "पक्का करें और टोकन लें",
   "reg.creating": "टोकन बन रहा है…",
-  "reg.submitE": "टोकन नहीं बन सका। कनेक्शन जांचकर फिर कोशिश करें।",
   "reg.skip": "छोड़ें",
   "reg.fName": "नाम",
   "reg.fAge": "उम्र",

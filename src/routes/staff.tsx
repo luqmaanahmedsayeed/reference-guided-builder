@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { Check, RotateCcw, Siren, UserRound, UserRoundCheck } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Btn, PageTitle } from "@/components/kit";
@@ -18,63 +18,11 @@ import {
 } from "@/lib/store";
 import { useT, fmtTime } from "@/lib/i18n";
 import { pageHead } from "@/lib/head";
-
-const STAFF_PASSWORD = "STAFF-ONLY";
-
 export const Route = createFileRoute("/staff")({
   head: pageHead("Staff dashboard", "Demo staff view of the OPD queue."),
   component: StaffPage,
 });
-function StaffPasswordGate({ onUnlock }: { onUnlock: () => void }) {
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (password === STAFF_PASSWORD) {
-      setError(false);
-      onUnlock();
-      return;
-    }
-    setError(true);
-  }
-
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-5 py-10">
-      <section className="tile w-full max-w-md border-2 border-foreground p-6 sm:p-8" aria-labelledby="staff-gate-title">
-        <p className="eyebrow">Hospital Dashboard</p>
-        <h1 id="staff-gate-title" className="mt-2 text-3xl">Staff access</h1>
-        <p className="mt-3 text-muted-foreground">Enter the staff password to access the Hospital Dashboard.</p>
-        <form className="mt-6 flex flex-col gap-4" onSubmit={submit}>
-          <label htmlFor="staff-password" className="font-mono text-sm font-bold">Password</label>
-          <input
-            id="staff-password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-              if (error) setError(false);
-            }}
-            className="min-h-12 border-2 border-foreground bg-background px-3 text-base outline-none focus:border-primary"
-            autoFocus
-          />
-          {error && <p className="text-sm font-bold text-destructive" role="alert">Incorrect password. Please try again.</p>}
-          <Btn type="submit" size="lg" className="mt-1">Enter dashboard</Btn>
-        </form>
-      </section>
-    </main>
-  );
-}
-
 function StaffPage() {
-  const [unlocked, setUnlocked] = useState(false);
-
-  return unlocked ? <StaffDashboard /> : <StaffPasswordGate onUnlock={() => setUnlocked(true)} />;
-}
-
-function StaffDashboard() {
   const { t, l } = useT();
   const s = useQueue();
   const [dept, setDept] = useState<DeptId>("MED");

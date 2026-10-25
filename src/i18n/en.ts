@@ -65,7 +65,6 @@ export const en = {
   "reg.reviewH": "You can change anything before getting your token.",
   "reg.confirm": "Confirm and get token",
   "reg.creating": "Creating token…",
- "reg.submitE": "We couldn’t create your token. Please check your connection and try again.",
   "reg.skip": "Skip",
   "reg.fName": "Name",
   "reg.fAge": "Age",
